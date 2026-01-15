@@ -7,7 +7,7 @@ let sequelize;
 
 if (process.env.DATABASE_URL) {
     // Usar DATABASE_URL si está disponible (Railway, Heroku, etc.)
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
+    sequelize = new Sequelize("postgresql://postgres:pThfIYqGuZMhEbETCJklkILRmWvpjDTp@shinkansen.proxy.rlwy.net:20616/railway", {
         dialect: 'postgres',
         dialectModule: pg, // Especificar explícitamente para Vercel
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
