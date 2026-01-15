@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const pg = require('pg');
 require('dotenv').config();
 
 // Configuración de Sequelize con soporte para DATABASE_URL
@@ -8,6 +9,7 @@ if (process.env.DATABASE_URL) {
     // Usar DATABASE_URL si está disponible (Railway, Heroku, etc.)
     sequelize = new Sequelize(process.env.DATABASE_URL, {
         dialect: 'postgres',
+        dialectModule: pg, // Especificar explícitamente para Vercel
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
         dialectOptions: {
             ssl: process.env.NODE_ENV === 'production' ? {
@@ -32,6 +34,7 @@ if (process.env.DATABASE_URL) {
             host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             dialect: 'postgres',
+            dialectModule: pg, // Especificar explícitamente para Vercel
             logging: process.env.NODE_ENV === 'development' ? console.log : false,
             pool: {
                 max: 5,
