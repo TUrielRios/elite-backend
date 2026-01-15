@@ -1,5 +1,14 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../key.json');
+
+// Leer credenciales desde variable de entorno o archivo local
+let serviceAccount;
+if (process.env.FIREBASE_CONFIG) {
+    // En producción (Vercel), leer desde variable de entorno
+    serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
+} else {
+    // En desarrollo local, leer desde archivo
+    serviceAccount = require('../key.json');
+}
 
 // Inicializar Firebase Admin
 admin.initializeApp({
