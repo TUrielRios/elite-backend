@@ -13,7 +13,7 @@ if (process.env.FIREBASE_CONFIG) {
 // Inicializar Firebase Admin
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: 'reservatusturnos-450a5.appspot.com'
+    storageBucket: 'reservatusturnos-450a5.firebasestorage.app'
 });
 
 const bucket = admin.storage().bucket();
