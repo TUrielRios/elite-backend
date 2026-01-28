@@ -30,12 +30,24 @@ const uploadToFirebase = async (fileBuffer, filename, mimetype) => {
         // Crear referencia al archivo en Firebase Storage
         const file = bucket.file(`vehicles/${filename}`);
 
-        // Subir el archivo
+        // Configurar metadata para preservar transparencia en PNGs
+        const metadata = {
+            contentType: mimetype,
+            cacheControl: 'public, max-age=31536000',
+        };
+
+        // Para PNGs, asegurar que se preserve el canal alpha
+        if (mimetype === 'image/png') {
+            metadata.metadata = {
+                firebaseStorageDownloadTokens: Date.now().toString(),
+            };
+        }
+
+        // Subir el archivo con metadata completa
         await file.save(fileBuffer, {
-            metadata: {
-                contentType: mimetype,
-            },
+            metadata: metadata,
             public: true, // Hacer el archivo público
+            resumable: false, // Desactivar resumable para archivos pequeños
         });
 
         // Obtener la URL pública

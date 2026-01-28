@@ -77,6 +77,12 @@ exports.createVehicle = async (req, res) => {
         let imageUrl = null;
         if (req.file) {
             try {
+                console.log('📸 Procesando imagen:');
+                console.log('  - Nombre original:', req.file.originalname);
+                console.log('  - MIME type:', req.file.mimetype);
+                console.log('  - Tamaño:', req.file.size, 'bytes');
+                console.log('  - Buffer length:', req.file.buffer.length);
+
                 // Generar nombre único para la imagen
                 const ext = path.extname(req.file.originalname);
                 const uniqueFilename = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
